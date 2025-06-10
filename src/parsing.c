@@ -6,7 +6,7 @@
 /*   By: kpires <kpires@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 01:46:00 by redrouic          #+#    #+#             */
-/*   Updated: 2025/06/04 20:17:43 by redrouic         ###   ########.fr       */
+/*   Updated: 2025/06/05 13:24:12 by redrouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ char	*get_buff(int fd)
 		return (fd_putstr(READ, 2), free(buff), close(fd), exit(1), NULL);
 	if (buff)
 		buff[sizeb] = '\0';
+	if (!buff)
+		return (fd_putstr(OPEN, 2), free(buff), NULL);
 	return (buff);
 }
 

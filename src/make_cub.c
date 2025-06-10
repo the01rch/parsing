@@ -6,7 +6,7 @@
 /*   By: redrouic <redrouic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 08:25:53 by redrouic          #+#    #+#             */
-/*   Updated: 2025/06/05 08:58:56 by redrouic         ###   ########.fr       */
+/*   Updated: 2025/06/10 14:10:46 by redrouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,34 @@ char	**make_cub(char **arr, int index, int size)
 	}
 	new_arr[i] = NULL;
 	return (new_arr);
+}
+
+bool	is_surrounded(char **map)
+{
+	int		y;
+	int		x;
+	bool	inside;
+
+	x = 0;
+	y = 0;
+	inside = false;
+	while (map[y])
+	{
+		while (map[y][x])
+		{
+			if (map[y][x] == '1')
+				inside = true;
+			if (inside && map[y][x] == 32)
+			{
+				if ((map[y-1][x] == '1' || map[y-1][x] == 32) 
+						&& (map[y+1][x] == '1' || map[y+1][x] == 32))
+					return (true);
+				else
+					return (false);
+			}
+			x++;
+		}
+		y++;
+	}
+	return (true);
 }

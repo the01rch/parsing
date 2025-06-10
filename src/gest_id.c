@@ -6,7 +6,7 @@
 /*   By: redrouic <redrouic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 07:35:29 by redrouic          #+#    #+#             */
-/*   Updated: 2025/06/05 07:35:47 by redrouic         ###   ########.fr       */
+/*   Updated: 2025/06/10 17:01:21 by redrouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,3 +57,41 @@ int	count_sep(char *tab)
 	}
 	return (sep);
 }
+
+static int is_valid_rgb(const char *str)
+{
+	int	count;
+	int	num;
+	int	digit_found;
+
+	count = 0;
+	if (!str) 
+		return (0);
+	while (*str) 
+	{
+		num = 0;
+		digit_found = 0;
+		while (*str && (*str >= '0' && *str <= '9')) 
+		{
+			digit_found = 1;
+			num = num * 10 + (*str - '0');
+			if (num > 255) 
+				return (0);
+			str++;
+		}
+		if (!digit_found) 
+			return (0);
+		count++;
+		if (count == 4) 
+		{
+			if (*str != '\0') 
+				return (0);
+			break;
+		}
+		if (*str != ',') 
+			return (0);
+		str++;
+	}
+	return (count == 4);
+}
+
