@@ -6,7 +6,7 @@
 /*   By: kpires <kpires@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 18:57:54 by redrouic          #+#    #+#             */
-/*   Updated: 2025/06/10 17:01:52 by redrouic         ###   ########.fr       */
+/*   Updated: 2025/06/16 11:46:24 by redrouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,52 +32,10 @@ static bool	check_valid_line(char *str)
 	return (false);
 }
 
-bool	is_wall(char *str, int size)
-{
-	int	x;
-	int	i;
-
-	x = size - 1;
-	i = 0;
-	while (str[x] == 32)
-		x--;
-	while (str[i] == 32)
-		i++;
-	while (str[i] && i < x)
-	{
-		if (str[i] != '1')
-			return (false);
-		i++;
-	}
-	return (true);
-}
-
-size_t	ret_map_line(char **arr)
-{
-	int	ret;
-	int	y;
-
-	y = 0;
-	ret = -1;
-	while (arr[y])
-	{
-		if (check_valid_line(arr[y]) 
-				&& ret == -1 && is_wall(arr[y], ft_strlen(arr[y])))
-			ret = y;
-		if (ret != -1)
-		{
-			if (!check_valid_line(arr[y]))
-				return (-1);
-		}
-		y++;
-	}
-	return (ret);
-}
-
 bool	map_closed(char **arr, int y)
 {
 	int	i;
-	
+
 	i = 0;
 	while (arr[y + 1] != NULL)
 	{
@@ -93,35 +51,10 @@ bool	map_closed(char **arr, int y)
 	return (true);
 }
 
-size_t	ret_map_index(char *file)
-{
-	int		i;
-	int		first;
-	int		last;
-
-	i = 0;
-	first = 0;
-	last = 0;
-	while (file[i])
-	{
-		if (file[i] == '\n')
-		{
-			i++;
-			first = i;
-			while (file[i] != '\n')
-				i++;
-			last = i - 1;
-			if (is_wall(&file[first], (last-first)))
-				break ;
-		}
-	}
-	return (i);
-}
-
 bool	is_double_player(char *str)
 {
 	int		i;
-	int	check;
+	int		check;
 
 	i = ret_map_index(str);
 	check = 0;
@@ -136,35 +69,6 @@ bool	is_double_player(char *str)
 	return (false);
 }
 
-int	*player_pos(char **arr)
-{
-	int	*pos;
-	int	y;
-	int	x;
-
-	y = 0;
-	x = 0;
-	pos = malloc(sizeof(int) * 2);
-	if (!pos)
-		return (NULL);
-	pos[0] = 0;
-	pos[1] = 0;
-	while (arr[y])
-	{
-		while (arr[y][x])
-		{
-			if (arr[y][x] == 'N' || arr[y][x] == 'S' 
-					|| arr[y][x] == 'E' || arr[y][x] == 'W') {
-				pos[0] = x;
-				pos[1] = y;
-			}
-			x++;
-		}
-		y++;
-	}
-	return (pos);
-}
-
 bool	is_mult_lines(char *file)
 {
 	int		i;
@@ -172,7 +76,7 @@ bool	is_mult_lines(char *file)
 	i = ret_map_index(file);
 	while (file[i])
 	{
-		if (file[i] == '\n') 
+		if (file[i] == '\n')
 		{
 			i++;
 			while (file[i] == 32)

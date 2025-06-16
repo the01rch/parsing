@@ -6,7 +6,7 @@
 /*   By: kpires <kpires@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 01:46:00 by redrouic          #+#    #+#             */
-/*   Updated: 2025/06/05 13:24:12 by redrouic         ###   ########.fr       */
+/*   Updated: 2025/06/16 11:05:55 by redrouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	*get_buff(int fd)
 	return (buff);
 }
 
-int	main(int ac, char **av)
+int	parsing(int ac, char **av)
 {
 	char	*map;
 

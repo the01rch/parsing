@@ -6,7 +6,7 @@
 /*   By: redrouic <redrouic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 20:08:31 by redrouic          #+#    #+#             */
-/*   Updated: 2025/06/04 20:20:28 by redrouic         ###   ########.fr       */
+/*   Updated: 2025/06/16 12:13:31 by redrouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	size_t i;
+	size_t	i;
 
 	if (!dst || !src)
 		return (0);
@@ -35,66 +35,84 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 
 bool	is_separator(char c, const char *sep)
 {
-	if (!sep) return false;
-	while (*sep) {
+	if (!sep)
+		return (false);
+	while (*sep)
+	{
 		if (c == *sep)
-			return true;
+			return (true);
 		sep++;
 	}
-	return false;
+	return (false);
 }
 
 int	count_words(const char *str, const char *sep)
 {
-	int count = 0;
-	bool in_word = false;
+	int		count;
+	bool	in_word;
 
-	if (!str || !sep) return 0;
-
-	while (*str) {
-		if (!is_separator(*str, sep)) {
-			if (!in_word) {
+	count = 0;
+	in_word = false;
+	if (!str || !sep)
+		return (0);
+	while (*str)
+	{
+		if (!is_separator(*str, sep))
+		{
+			if (!in_word)
+			{
 				count++;
 				in_word = true;
 			}
-		} else {
-			in_word = false;
 		}
+		else
+			in_word = false;
 		str++;
 	}
-	return count;
+	return (count);
+}
+
+bool	fill_arr(char **arr, char *str, const char *sep, int i)
+{
+	const char	*start;
+	int			len;
+
+	start = str;
+	while (*str && !is_separator(*str, sep))
+		str++;
+	len = str - start;
+	arr[i] = malloc(sizeof(char) * len + 1);
+	ft_strlcpy(arr[i++], start, len + 1);
+	if (!arr[i])
+	{
+		while (--i >= 0)
+			free(arr[i]);
+		free(arr);
+		return (free(arr), false);
+	}
+	return (true);
 }
 
 char	**str2arr(char *str, const char *sep)
 {
-	int word_count = count_words(str, sep);
-	char **arr = malloc(sizeof(char *) * (word_count + 1));
+	char		**arr;
+	int			word_count;
+	int			i;
 
-	if (!str || !sep) return NULL;
-
-	if (!arr) return NULL;
-
-	int i = 0;
-	while (*str) {
+	word_count = count_words(str, sep);
+	arr = malloc(sizeof(char *) * (word_count + 1));
+	if (!arr)
+		return (NULL);
+	i = 0;
+	while (*str)
+	{
 		while (*str && is_separator(*str, sep))
 			str++;
-
-		if (!*str) break;
-
-		const char *start = str;
-		while (*str && !is_separator(*str, sep))
-			str++;
-
-		int len = str - start;
-		arr[i] = malloc(len + 1);
-		if (!arr[i]) {
-			while (--i >= 0) free(arr[i]);
-			free(arr);
-			return NULL;
-		}
-		ft_strlcpy(arr[i], start, len + 1);
-		i++;
+		if (!*str)
+			break ;
+		if (!fill_arr(arr, str, sep, i))
+			return (NULL);
 	}
 	arr[i] = NULL;
-	return arr;
+	return (arr);
 }

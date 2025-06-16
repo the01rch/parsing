@@ -6,7 +6,7 @@
 /*   By: redrouic <redrouic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 07:35:29 by redrouic          #+#    #+#             */
-/*   Updated: 2025/06/10 17:01:21 by redrouic         ###   ########.fr       */
+/*   Updated: 2025/06/16 11:57:01 by redrouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ bool	is_id(char *str)
 bool	valid_id(char **arr, int line)
 {
 	char	**tab;
+	char	*tmp;
 	int		y;
 
 	y = 0;
@@ -34,14 +35,17 @@ bool	valid_id(char **arr, int line)
 			return (false);
 		if (!tab[1])
 			return (fd_putstr("Error\nNo ID content provided\n", 2), false);
+		if (!ft_strcmp(tab[0], "F") && !ft_strcmp(tab[0], "C"))
+			tmp = get_buff(tab[1]);
 		if (tab[0] && tab[1])
-			(free(tab[0]), free(tab[1]));
+			(free(tmp), free(tab[0]), free(tab[1]));
 		tab = 0;
 		y++;
 	}
 	return (true);
 }
 
+/*
 int	count_sep(char *tab)
 {
 	int	i;
@@ -58,7 +62,7 @@ int	count_sep(char *tab)
 	return (sep);
 }
 
-static int is_valid_rgb(const char *str)
+static int	is_valid_rgb(const char *str)
 {
 	int	count;
 	int	num;
@@ -94,4 +98,4 @@ static int is_valid_rgb(const char *str)
 	}
 	return (count == 4);
 }
-
+*/
